@@ -1,0 +1,23 @@
+- name: Install nginx on Debian
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: Deploy index.html
+  ansible.builtin.template:
+    src: index1.html.j2
+    dest: /var/www/html/index.html
+  notify: reload nginx
+
+- name: Deploy nginx config
+  ansible.builtin.copy:
+    src: default.conf
+    dest: /etc/nginx/sites-available/default
+  notify: reload nginx
+
+- name: Ensure nginx sites-enabled symlink
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/default
+    dest: /etc/nginx/sites-enabled/default
+    state: link
