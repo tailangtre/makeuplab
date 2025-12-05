@@ -1,0 +1,31 @@
+- name: Install nginx on Rocky
+  ansible.builtin.dnf:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: Create /var/www/html directory
+  ansible.builtin.file:
+    path: /var/www/html
+    state: directory
+    owner: nginx
+    group: nginx
+    mode: '0755'
+
+- name: Deploy index.html
+  ansible.builtin.template:
+    src: index2.html.j2
+    dest: /var/www/html/index.html
+  notify: reload nginx
+
+- name: Deploy nginx config
+  ansible.builtin.copy:
+    src: default.conf
+    dest: /etc/nginx/nginx.conf.default
+  notify: reload nginx
+
+- name: Ensure nginx is started and enabled
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: yes
