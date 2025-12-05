@@ -1,6 +1,5 @@
 # makeuplab
 
-# 4640-ansible-roles-lab
 
 
 This repository contains infrastructure managed with Terraform and server configuration managed with Ansible. Terraform provisions two EC2 instances on AWS: one Ubuntu server used as the frontend (nginx), and one Rocky Linux server used as the Redis backend (fake). Ansible then configures these servers using properly separated roles.
@@ -110,7 +109,6 @@ ansible-playbook playbook.yml
 
 ## Screenshot
 
-`server-img.jpg` shows the HTML page served by the Ubuntu server after successful Ansible configuration.
 ![Screenshot](screenshot.png)
 
 ---
